@@ -1,13 +1,27 @@
 services:
   postgres:
-    image: 'postgres:latest'
+    image: postgres:15-alpine
+    container_name: tenpodb
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+      - POSTGRES_DB=mydb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     ports:
-      - '5432'
-  redis:
-    image: 'redis:latest'
-    ports:
-      - '6379'
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # a incluir datos de prueba
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
+
