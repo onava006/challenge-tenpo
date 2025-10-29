@@ -1,0 +1,5 @@
+openapi: 3.0.3
+info:
+  title: challenge tenpo api para consulta de recursos
+  version: 1.0.0
+  x-api-name: TenpoApi
