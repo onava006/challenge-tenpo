@@ -1,6 +1,8 @@
 package cl.tenpo.challenge.domain.ports.input;
 
+import cl.tenpo.challenge.domain.model.TotalSum;
+
 public interface CalculateTotalSumUseCase {
 
-    int get(int firstValue, int secondValue, int percentage);
+    TotalSum get(int firstValue, int secondValue, int percentage);
 }
