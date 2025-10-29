@@ -1,6 +1,6 @@
 package cl.tenpo.challenge.domain.ports.output;
 
-public interface FindPercentage {
+public interface FindPercentageRepository {
 
     int get();
 }
