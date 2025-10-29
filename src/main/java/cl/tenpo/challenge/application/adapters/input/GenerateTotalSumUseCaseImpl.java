@@ -1,6 +1,6 @@
 package cl.tenpo.challenge.application.adapters.input;
 
-import cl.tenpo.challenge.application.dto.response.TotalSumResponse;
+import cl.tenpo.challenge.application.dto.response.TotalSumDto;
 import cl.tenpo.challenge.application.mapper.TotalSumMapper;
 import cl.tenpo.challenge.application.port.input.GenerateTotalSumUseCase;
 import cl.tenpo.challenge.domain.model.TotalSum;
@@ -23,7 +23,7 @@ public class GenerateTotalSumUseCaseImpl implements GenerateTotalSumUseCase {
     }
 
     @Override
-    public TotalSumResponse get(int firstValue, int secondValue) {
+    public TotalSumDto get(int firstValue, int secondValue) {
         Integer percentageRate;
         Integer percentageCacheRate;
         TotalSum total;

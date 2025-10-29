@@ -28,7 +28,7 @@ repositories {
 openApiGenerate {
     generatorName = "spring"
     inputSpec = "$rootDir/src/main/resources/openapi/api.yaml"
-    outputDir = "$buildDir/generated"  // ← CAMBIADO: era $rootProject.layout.buildDirectory
+    outputDir = "$buildDir/generated"
     apiPackage = "cl.hf.solutions.prueba.infrastructure.adapters.in.rest.api"
     modelPackage = "cl.hf.solutions.prueba.infrastructure.adapters.in.rest.model"
     configOptions = [
@@ -36,14 +36,14 @@ openApiGenerate {
             interfaceOnly: "true",
             useSpringBoot3: "true",
             useTags: "true",
-            dateLibrary: "java8-localdatetime",  // ← CAMBIADO: mejor para Java 17
-            useJakartaEe: "true",                // ← AGREGADO: necesario para Spring Boot 3
+            dateLibrary: "java8-localdatetime",
+            useJakartaEe: "true",
             hideGenerationTimestamp: "true",
             skipDefaultInterface: "true",
             serializationLibrary: "jackson",
-            documentationProvider: "springdoc",  // ← AGREGADO: para SpringDoc
-            useBeanValidation: "true",           // ← AGREGADO: validaciones
-            performBeanValidation: "true",      // ← AGREGADO: validaciones en runtime
+            documentationProvider: "springdoc",
+            useBeanValidation: "true",
+            performBeanValidation: "true",
             tagName: "UsersApi",
     ]
     globalProperties = [
@@ -86,7 +86,7 @@ dependencies {
 	testImplementation 'org.testcontainers:postgresql'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    //api - AGREGADO: dependencia para validaciones
+    //api - dependencia para validaciones
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9'
     implementation 'org.openapitools:jackson-databind-nullable:0.2.6'

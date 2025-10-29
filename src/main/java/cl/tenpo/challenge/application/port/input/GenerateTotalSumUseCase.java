@@ -1,8 +1,8 @@
 package cl.tenpo.challenge.application.port.input;
 
-import cl.tenpo.challenge.application.dto.response.TotalSumResponse;
+import cl.tenpo.challenge.application.dto.response.TotalSumDto;
 
 public interface GenerateTotalSumUseCase {
 
-    TotalSumResponse get(int firstValue, int secondValue);
+    TotalSumDto get(int firstValue, int secondValue);
 }
