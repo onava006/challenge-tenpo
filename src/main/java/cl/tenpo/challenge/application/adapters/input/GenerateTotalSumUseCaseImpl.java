@@ -24,6 +24,7 @@ public class GenerateTotalSumUseCaseImpl implements GenerateTotalSumUseCase {
 
     @Override
     public TotalSumDto get(int firstValue, int secondValue) {
+
         Integer percentageRate;
         Integer percentageCacheRate;
         TotalSum total;
@@ -33,11 +34,13 @@ public class GenerateTotalSumUseCaseImpl implements GenerateTotalSumUseCase {
             percentageRateCachePort.cachePercentageRate(percentageRate);
             total = totalSumUseCase.get(firstValue, secondValue, percentageRate);
         }
+
         //mejorar definicion de exception para que sea mas precisa segun servicio a consultar
         catch(Exception e){
             percentageCacheRate = percentageRateCachePort.getPercentageRate();
             total = totalSumUseCase.get(firstValue, secondValue,percentageCacheRate);
         }
+
         return TotalSumMapper.toResponse(total);
 
     }
