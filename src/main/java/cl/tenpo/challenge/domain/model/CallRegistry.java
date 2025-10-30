@@ -8,19 +8,7 @@ public record CallRegistry(
         LocalDateTime date,
         String endpoint,
         String parameters,
-        CALLSTATUS callstatus) {
-
-    /***
-     *  fecha, endpoint,
-     *     parámetros, respuesta o error
-     */
-
-    private enum CALLSTATUS{
-        RECEIVED,
-        ERROR,
-        REDIRECTED
-    }
-
+        CallStatus callstatus) {
 }
 
 
