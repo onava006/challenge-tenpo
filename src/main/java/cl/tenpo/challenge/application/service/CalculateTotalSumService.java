@@ -1,9 +1,11 @@
-package cl.tenpo.challenge.domain.service;
+package cl.tenpo.challenge.application.service;
 
 import cl.tenpo.challenge.domain.model.TotalSum;
 import cl.tenpo.challenge.domain.ports.input.CalculateTotalSumUseCase;
+import org.springframework.stereotype.Service;
 
-public class CalculateTotalSumUseCaseImpl implements CalculateTotalSumUseCase {
+@Service
+public class CalculateTotalSumService implements CalculateTotalSumUseCase {
 
 
     @Override
