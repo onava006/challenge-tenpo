@@ -1,0 +1,56 @@
+openapi: 3.0.3
+info:
+  title: challenge tenpo api para consulta de recursos
+  version: 1.0.0
+  x-api-name: TenpoApi
+
+paths:
+  /calculatetotal:
+    get:
+      tags:
+        - Tenpo
+      summary: Calcula la suma, el porcentaje y el total a partir de dos números.
+      operationId: calculateTotal
+      parameters:
+        - name: num1
+          in: query
+          required: true
+          description: Primer número entero
+          schema:
+            type: integer
+        - name: num2
+          in: query
+          required: true
+          description: Segundo número entero
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Resultado del cálculo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TotalSumResponse'
+        '400':
+          description: Parámetros inválidos
+
+components:
+  schemas:
+    TotalSumResponse:
+      type: object
+      properties:
+        suma:
+          type: number
+          example: 30
+        porcentaje:
+          type: number
+          format: float
+          example: 15.5
+        total:
+          type: number
+          example: 34.65
+      required:
+        - suma
+        - porcentaje
+        - total
+

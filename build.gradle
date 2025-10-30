@@ -2,6 +2,8 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.7'
 	id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.openapi.generator' version '7.0.1'
+
 }
 
 group = 'cl.tenpo'
@@ -23,9 +25,54 @@ repositories {
 	mavenCentral()
 }
 
+openApiGenerate {
+    generatorName = "spring"
+    inputSpec = "$rootDir/src/main/resources/openapi/api.yaml"
+    outputDir = "$buildDir/generated"
+    apiPackage = "cl.tenpo.challenge.infrastructure.adapters.in.rest.api"
+    modelPackage = "cl.tenpo.challenge.infrastructure.adapters.in.rest.model"
+    configOptions = [
+            apiNameSuffix: "User",
+            interfaceOnly: "true",
+            useSpringBoot3: "true",
+            useTags: "true",
+            dateLibrary: "java8-localdatetime",
+            useJakartaEe: "true",
+            hideGenerationTimestamp: "true",
+            skipDefaultInterface: "true",
+            serializationLibrary: "jackson",
+            documentationProvider: "springdoc",
+            useBeanValidation: "true",
+            performBeanValidation: "true",
+            tagName: "UsersApi",
+    ]
+    globalProperties = [
+            models: "",
+            apis: ""
+    ]
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs += ["$buildDir/generated/src/main/java"]
+        }
+    }
+}
+tasks.openApiGenerate {
+    inputs.file("$rootDir/src/main/resources/openapi/api.yaml")
+    outputs.dir("$buildDir/generated")
+}
+
+tasks.register("cleanGenerated", Delete) {
+    delete "$buildDir/generated"
+}
+
+clean.dependsOn cleanGenerated
+
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.apache.tomcat.embed:tomcat-embed-core:11.0.10'
 	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
@@ -37,6 +84,15 @@ dependencies {
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:postgresql'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    //api - dependencia para validaciones
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9'
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
+    implementation 'io.swagger.core.v3:swagger-annotations:2.2.16'
+
+    // cache
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {

@@ -9,9 +9,10 @@ public class CalculateTotalSumUseCaseImpl implements CalculateTotalSumUseCase {
     @Override
     public TotalSum get(int firstValue, int secondValue, int percentage) {
         int sum =  firstValue + secondValue;
-        int decimalPercentage = percentage / 100;
-        int total = sum + (sum * decimalPercentage);
+        double decimalPercentage = percentage / 100.0;
+        double factorToSum = sum * decimalPercentage;
+        int total = sum + (int)factorToSum;
 
-        return new TotalSum(sum,decimalPercentage,total);
+        return new TotalSum(sum, percentage, total);
     }
 }

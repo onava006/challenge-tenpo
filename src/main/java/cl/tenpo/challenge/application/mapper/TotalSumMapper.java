@@ -1,30 +1,30 @@
 package cl.tenpo.challenge.application.mapper;
 
-import cl.tenpo.challenge.application.dto.response.TotalSumResponse;
+import cl.tenpo.challenge.application.dto.response.TotalSumDto;
 import cl.tenpo.challenge.domain.model.TotalSum;
 
 public class TotalSumMapper {
 
-    public static TotalSumResponse toResponse(TotalSum domain) {
+    public static TotalSumDto toResponse(TotalSum domain) {
         if (domain == null) {
             return null;
         }
 
-        return new TotalSumResponse(
+        return new TotalSumDto(
                 domain.sum(),
                 domain.percentage(),
                 domain.total()
         );
     }
 
-    public static TotalSum toDomain(TotalSumResponse response) {
-        if (response == null) {
+    public static TotalSum toDomain(TotalSumDto dto) {
+        if (dto == null) {
             return null;
         }
 
         return new TotalSum(
-                response.sum(),
-                response.percentage(),
-                response.total()
+                dto.sum(),
+                dto.percentage(),
+                dto.total()
         );
     }}
