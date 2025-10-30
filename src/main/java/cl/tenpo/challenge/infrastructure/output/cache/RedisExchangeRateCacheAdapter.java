@@ -19,7 +19,7 @@ public class RedisExchangeRateCacheAdapter implements PercentageRateCachePort {
     private static final long TTL_MINUTES = 30;
 
     @Value("${cl.tenpo.challenge.cache.key-name}")
-    String key;
+    public String key;
 
     public RedisExchangeRateCacheAdapter(RedisTemplate<String, PercentageEntity> redisTemplate){
         this.redisTemplate = redisTemplate;
