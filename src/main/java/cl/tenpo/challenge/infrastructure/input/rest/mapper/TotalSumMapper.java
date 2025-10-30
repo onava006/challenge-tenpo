@@ -1,7 +1,7 @@
 package cl.tenpo.challenge.infrastructure.input.rest.mapper;
 
-import cl.hf.solutions.prueba.infrastructure.adapters.in.rest.model.TotalSumResponse;
 import cl.tenpo.challenge.application.dto.response.TotalSumDto;
+import cl.tenpo.challenge.infrastructure.adapters.in.rest.model.TotalSumResponse;
 
 import java.math.BigDecimal;
 

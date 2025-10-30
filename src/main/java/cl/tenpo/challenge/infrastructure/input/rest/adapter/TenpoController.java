@@ -1,12 +1,14 @@
-package cl.tenpo.challenge.infrastructure.input.rest;
+package cl.tenpo.challenge.infrastructure.input.rest.adapter;
 
-import cl.hf.solutions.prueba.infrastructure.adapters.in.rest.api.TenpoApi;
-import cl.hf.solutions.prueba.infrastructure.adapters.in.rest.model.TotalSumResponse;
+import cl.tenpo.challenge.infrastructure.adapters.in.rest.api.TenpoApi;
+import cl.tenpo.challenge.infrastructure.adapters.in.rest.model.TotalSumResponse;
 import cl.tenpo.challenge.application.port.input.GenerateTotalSumUseCase;
 import cl.tenpo.challenge.infrastructure.input.rest.mapper.TotalSumMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class TenpoController implements TenpoApi {
 
     GenerateTotalSumUseCase generateTotalSum;

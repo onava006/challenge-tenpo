@@ -3,16 +3,25 @@ package cl.tenpo.challenge.application.adapters.input;
 import cl.tenpo.challenge.application.dto.response.TotalSumDto;
 import cl.tenpo.challenge.application.mapper.TotalSumMapper;
 import cl.tenpo.challenge.application.port.input.GenerateTotalSumUseCase;
+import cl.tenpo.challenge.domain.model.Percentage;
 import cl.tenpo.challenge.domain.model.TotalSum;
 import cl.tenpo.challenge.domain.ports.input.CalculateTotalSumUseCase;
 import cl.tenpo.challenge.domain.ports.output.PercentageRateCachePort;
 import cl.tenpo.challenge.domain.ports.output.PercentageRatePort;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 
+
+@Service
 public class GenerateTotalSumUseCaseImpl implements GenerateTotalSumUseCase {
 
     PercentageRateCachePort percentageRateCachePort;
     PercentageRatePort percentageRatePort;
     CalculateTotalSumUseCase totalSumUseCase;
+
+    private static final Logger logger = LoggerFactory.getLogger(GenerateTotalSumUseCaseImpl.class);
 
     public GenerateTotalSumUseCaseImpl(    PercentageRateCachePort percentageRateCachePort,
     PercentageRatePort percentageRatePort,
@@ -31,16 +40,15 @@ public class GenerateTotalSumUseCaseImpl implements GenerateTotalSumUseCase {
 
         try {
             percentageRate = percentageRatePort.getPercentageRate();
-            percentageRateCachePort.cachePercentageRate(percentageRate);
+            percentageRateCachePort.cachePercentageRate(new Percentage(percentageRate));
             total = totalSumUseCase.get(firstValue, secondValue, percentageRate);
         }
 
-        //mejorar definicion de exception para que sea mas precisa segun servicio a consultar
-        catch(Exception e){
-            percentageCacheRate = percentageRateCachePort.getPercentageRate();
-            total = totalSumUseCase.get(firstValue, secondValue,percentageCacheRate);
+        catch(ResourceAccessException e){
+            logger.info("Error in Api request. Performing a cache request");
+            percentageCacheRate = percentageRateCachePort.getPercentageRate().getPercetage();
+            total = totalSumUseCase.get(firstValue, secondValue, percentageCacheRate);
         }
-
         return TotalSumMapper.toResponse(total);
 
     }

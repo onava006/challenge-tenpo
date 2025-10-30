@@ -1,4 +1,4 @@
-package cl.tenpo.challenge.infrastructure.exception;
+package cl.tenpo.challenge.infrastructure.input.rest.exception;
 
 import cl.tenpo.challenge.application.exception.PercentageNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -13,11 +13,12 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({PercentageNotFoundException.class})
-    public ResponseEntity<Object> handleMiscorrectIdFormatException(PercentageNotFoundException exception) {
+    public ResponseEntity<Object> handle(PercentageNotFoundException exception) {
         Map<String, String> body = new HashMap<>();
         body.put("No existe un valor de porcentaje disponible para realizar conversion", exception.getMessage());
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(body);
     }
+
 }
