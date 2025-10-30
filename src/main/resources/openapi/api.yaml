@@ -1,0 +1,182 @@
+openapi: 3.0.3
+info:
+  title: Challenge Tenpo API para consulta de recursos
+  version: 1.0.0
+  x-api-name: TenpoApi
+
+paths:
+  /calculatetotal:
+    get:
+      tags:
+        - Sum Operation
+      summary: Calcula la suma, el porcentaje y el total a partir de dos números
+      operationId: calculateTotal
+      parameters:
+        - name: num1
+          in: query
+          required: true
+          description: Primer número entero
+          schema:
+            type: integer
+        - name: num2
+          in: query
+          required: true
+          description: Segundo número entero
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Resultado del cálculo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TotalSumResponse'
+        '400':
+          description: Parámetros inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /registerphonecalls:
+    post:
+      tags:
+        - Call Registry
+      summary: Registra una lista de llamadas telefónicas
+      operationId: registerPhoneCalls
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CallRegistryRequest'
+      responses:
+        '202':
+          description: Llamadas registradas correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncResponse'
+        '400':
+          description: Datos de entrada inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /getphonecalls:
+    get:
+      tags:
+        - Call Registry
+      summary: Obtiene lista de llamadas telefónicas
+      operationId: retrievePhoneCalls
+      responses:
+        '200':
+          description: Lista de llamadas telefónicas realizadas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CallRegistryResponse'
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    TotalSumResponse:
+      type: object
+      properties:
+        suma:
+          type: number
+          example: 30
+        porcentaje:
+          type: number
+          format: float
+          example: 15.5
+        total:
+          type: number
+          example: 34.65
+      required:
+        - suma
+        - porcentaje
+        - total
+
+    CallRegistryRequest:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+          example: "2025-10-29T14:32:00"
+        endpoint:
+          type: string
+          example: "+569"
+        parameters:
+          type: string
+          example: "2716123123"
+        callstatus:
+          $ref: '#/components/schemas/CallStatusApi'
+      required:
+        - date
+        - endpoint
+        - parameters
+
+    CallRegistryResponse:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+          example: "2025-10-29T14:32:00"
+        endpoint:
+          type: string
+          example: "+569"
+        parameters:
+          type: string
+          example: "2716123123"
+        callstatus:
+          $ref: '#/components/schemas/CallStatusApi'
+      required:
+        - date
+        - endpoint
+        - parameters
+        - callstatus
+
+    CallStatusApi:
+      type: string
+      enum:
+        - RECEIVED
+        - ERROR
+        - REDIRECTED
+      example: SUCCESS
+    AsyncResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Solicitud de registro recibida"
+        requestId:
+          type: string
+          format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
+      required:
+        - message
+        - requestId
+
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Error interno del servidor"
+        code:
+          type: integer
+          example: 500
