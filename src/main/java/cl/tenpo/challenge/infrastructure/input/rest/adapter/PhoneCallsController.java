@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -32,8 +32,8 @@ public class PhoneCallsController implements CallRegistryApi {
         UUID requestId = UUID.randomUUID();
         registerPhoneCallsUseCase.register(callRegistryRequest, requestId.toString());
 
-        String status = String.format("Solicitud recibida - RequestId: {}, Total: {}",
-                requestId, callRegistryRequest.size());
+        String status = String.format("[%s] : Solicitud recibida, Total: %d", LocalDateTime.now(),
+               callRegistryRequest.size());
 
         AsyncResponse response = new AsyncResponse(status, requestId);
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
@@ -41,6 +41,9 @@ public class PhoneCallsController implements CallRegistryApi {
 
     @Override
     public ResponseEntity<List<CallRegistryResponse>> retrievePhoneCalls() {
-        return null;
+
+        List<CallRegistryResponse> callRegistryResponse =  getPhoneCallsRegistryUseCase.execute();
+        return new ResponseEntity<>(callRegistryResponse, HttpStatus.OK);
+
     }
 }
