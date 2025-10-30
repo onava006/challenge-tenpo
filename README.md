@@ -77,6 +77,7 @@ GET http://localhost:8080/calculatetotal?num1=10&num2=20
 ```
 
 El sistema utiliza Redis para cachear el porcentaje obtenido del servicio externo, mejorando el rendimiento en llamadas posteriores.
+A este se observar en los logs del servicio cuando es llamado el caché, se simula un factor de errores que hace que se depende de este.
 
 ### Cargar lista de llamadas telefonicas
 
